@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "511021557254",
+    "project_id": "smartreserve-337c2",
+    "storage_bucket": "smartreserve-337c2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511021557254:android:ead0cba32ee6cb38934587",
+        "android_client_info": {
+          "package_name": "com.example.smart_reserve_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYdHcd-joXcwk7bEwkDE4WQwNZz4Q3gAk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511021557254:android:40940412036d8bf5934587",
+        "android_client_info": {
+          "package_name": "com.keerthi77459.smart_reserve"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYdHcd-joXcwk7bEwkDE4WQwNZz4Q3gAk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
