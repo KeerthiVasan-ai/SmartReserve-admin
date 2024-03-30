@@ -33,11 +33,13 @@ class BuildTextForm extends StatelessWidget {
         decoration: InputDecoration(
             labelText: label,
             prefixIcon: prefixIcon,
-            border: const OutlineInputBorder(),
+            border: const OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFF124076))
+            ),
             focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.black)
             ),
-            labelStyle: const TextStyle(color: Colors.blueGrey)
+            labelStyle: const TextStyle(color: Color(0xFF124076))
         ),
       ),
     );
