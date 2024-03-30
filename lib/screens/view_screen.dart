@@ -1,29 +1,30 @@
 import "package:cloud_firestore/cloud_firestore.dart";
-import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:smart_reserve_admin/widgets/build_app_bar.dart";
+import "package:smart_reserve_admin/widgets/build_list_builder.dart";
+import "package:smart_reserve_admin/widgets/ui/background_shapes.dart";
 
 import "../services/fetch_user_booking.dart";
 
-class ViewScreen extends StatelessWidget {
+class ViewScreen extends StatefulWidget {
   ViewScreen({super.key,required this.selectedDate});
 
   String selectedDate;
 
   @override
+  State<ViewScreen> createState() => _ViewScreenState();
+}
+
+class _ViewScreenState extends State<ViewScreen> {
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar("Booked Slots"),
-      body: SafeArea(
-        child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/background/check2.jpg"),
-              fit: BoxFit.cover,
-            ),
-          ),
+    return BackgroundShapes(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: buildAppBar("Booked Slots"),
+        body: SafeArea(
           child: StreamBuilder(
-            stream: FetchUserBooking.fetchBookingDetails(selectedDate),
+            stream: FetchUserBooking.fetchBookingDetails(widget.selectedDate),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
@@ -43,39 +44,7 @@ class ViewScreen extends StatelessWidget {
                 );
               }
 
-              return ListView.builder(
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  var data =
-                  snapshot.data!.docs[index].data() as Map<String, dynamic>;
-
-                  return Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Icon(Icons.bookmark),
-                            const SizedBox(width: 20),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("${data['tokenNumber']}"),
-                                Text("${data['name']}"),
-                                Text("${data['date']}"),
-                                Text("Slots: ${data['slots'].join(', ')}"),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              );
+              return BuildListBuilder(bookings: snapshot.data!.docs.toList(),);
             },
           ),
         ),
