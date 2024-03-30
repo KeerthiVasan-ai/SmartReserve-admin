@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_reserve_admin/screens/view_screen.dart';
-import 'package:smart_reserve_admin/widgets/build_app_bar.dart';
 import 'package:smart_reserve_admin/widgets/build_elevated_button.dart';
 import 'package:smart_reserve_admin/widgets/build_text_filed.dart';
 import 'package:smart_reserve_admin/widgets/ui/background_shapes.dart';
