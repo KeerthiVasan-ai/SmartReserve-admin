@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:smart_reserve_admin/screens/report_screen.dart';
 import 'package:smart_reserve_admin/screens/view_screen.dart';
 import 'package:smart_reserve_admin/widgets/build_elevated_button.dart';
 import 'package:smart_reserve_admin/widgets/build_text_filed.dart';
@@ -16,6 +17,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   late TextEditingController myDate;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -41,11 +43,18 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-  void displaySlots() {
+  void reportGenerateRoute() {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ViewScreen(selectedDate: myDate.text)));
+        context, MaterialPageRoute(builder: (context) => const ReportScreen()));
+  }
+
+  void displaySlots() {
+    if (_formKey.currentState!.validate()) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ViewScreen(selectedDate: myDate.text)));
+    }
   }
 
   @override
@@ -53,6 +62,10 @@ class _MainScreenState extends State<MainScreen> {
     return BackgroundShapes(
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        floatingActionButton: FloatingActionButton(
+          onPressed: reportGenerateRoute,
+          child: const Icon(Icons.file_present_rounded),
+        ),
         appBar: AppBar(
           title: Text(
             "Smart Reserve - Admin",
@@ -73,19 +86,22 @@ class _MainScreenState extends State<MainScreen> {
           ],
         ),
         body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              BuildTextForm(
-                controller: myDate,
-                label: "Select the Date",
-                readOnly: true,
-                prefixIcon: const Icon(Icons.date_range_rounded),
-                onTap: _selectDate,
-              ),
-              BuildElevatedButton(
-                  actionOnButton: displaySlots, buttonText: "CHECK!")
-            ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                BuildTextForm(
+                  controller: myDate,
+                  label: "Select the Date",
+                  readOnly: true,
+                  prefixIcon: const Icon(Icons.date_range_rounded),
+                  onTap: _selectDate,
+                ),
+                BuildElevatedButton(
+                    actionOnButton: displaySlots, buttonText: "CHECK!")
+              ],
+            ),
           ),
         ),
       ),
