@@ -63,8 +63,9 @@ class _MainScreenState extends State<MainScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.white,
           onPressed: reportGenerateRoute,
-          child: const Icon(Icons.file_present_rounded),
+          child: const Icon(Icons.file_present_rounded,color: Colors.black,),
         ),
         appBar: AppBar(
           title: Text(

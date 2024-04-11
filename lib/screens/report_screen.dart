@@ -90,16 +90,21 @@ class _ReportScreenState extends State<ReportScreen> {
         backgroundColor: Colors.transparent,
         appBar: buildAppBar("Report Generation"),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.white,
           onPressed: () {
             alert(_passwordController);
           },
-          child: const Icon(Icons.delete_forever),
+          child: const Icon(Icons.delete_forever,color: Colors.black,),
         ),
         body: SafeArea(
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Card(
+                color: Colors.transparent,
+                shadowColor: Colors.transparent,
+                borderOnForeground: true,
+                elevation: 20.0,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 24.0, bottom: 16.0),
                   child: Form(
