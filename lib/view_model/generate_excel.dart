@@ -28,7 +28,7 @@ class GenerateExcel {
     sheet.getRangeByIndex(1, 6).setText("Slots");
 
     for (var i = 0; i < tokenNumber.length; i++) {
-      sheet.getRangeByIndex(i + 2, 1).setText(i.toString());
+      sheet.getRangeByIndex(i + 2, 1).setText("${i+1}");
       sheet.getRangeByIndex(i + 2, 2).setText(tokenNumber[i]);
       sheet.getRangeByIndex(i + 2, 3).setText(name[i]);
       sheet.getRangeByIndex(i + 2, 4).setText(courseCode[i]);
