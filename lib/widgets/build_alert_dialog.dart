@@ -88,11 +88,13 @@ class BuildDialog {
                   await DeleteBooking.deleteBookingDetails(
                       "bookingUserDetails", "bookings");
                   Navigator.of(context).pop();
+                  password.clear();
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text('All Data Deleted Successfully'),
                   ));
                 } else {
-                  // Password incorrect, show error
+                  password.clear();
+
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text('Incorrect password.'),
                     backgroundColor: Colors.red,
