@@ -17,13 +17,13 @@ class BuildTextForm extends StatelessWidget {
       required this.prefixIcon,
       this.onTap,
       this.horizontalPadding = 25.0,
-      this.verticalPadding = 4.0
-      });
+      this.verticalPadding = 4.0});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: verticalPadding),
+      padding: EdgeInsets.symmetric(
+          horizontal: horizontalPadding, vertical: verticalPadding),
       child: TextFormField(
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -36,13 +36,14 @@ class BuildTextForm extends StatelessWidget {
         autofocus: false,
         readOnly: readOnly,
         decoration: InputDecoration(
-            labelText: label,
-            prefixIcon: prefixIcon,
-            border: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFF124076))),
-            focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)),
-            labelStyle: const TextStyle(color: Color(0xFF124076))),
+          labelText: label,
+          prefixIcon: prefixIcon,
+          border: const OutlineInputBorder(
+              borderSide: BorderSide(color: Color(0xFF124076))),
+          focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black)),
+          labelStyle: const TextStyle(color: Color(0xFF124076)),
+        ),
       ),
     );
   }
