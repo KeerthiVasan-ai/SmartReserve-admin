@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -33,5 +34,10 @@ class FileStorage {
     print("Save file");
 
     return await file.writeAsBytes(bytes);
+  }
+
+  static Future openFile(File file) async {
+    final url = file.path;
+    await OpenFile.open(url);
   }
 }
