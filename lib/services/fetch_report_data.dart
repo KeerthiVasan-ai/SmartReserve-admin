@@ -39,7 +39,7 @@ class FetchReportData {
           .doc(date)
           .collection("booking");
 
-      QuerySnapshot querySnapshot = await collectionRef.get();
+      QuerySnapshot querySnapshot = await collectionRef.orderBy("slotKey").get();
 
       allData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
