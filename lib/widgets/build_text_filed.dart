@@ -6,22 +6,27 @@ class BuildTextForm extends StatelessWidget {
   final bool readOnly;
   final Icon prefixIcon;
   final Function()? onTap;
+  final double horizontalPadding;
+  final double verticalPadding;
 
   const BuildTextForm(
       {super.key,
-        required this.controller,
-        required this.label,
-        required this.readOnly,
-        required this.prefixIcon,
-        this.onTap});
+      required this.controller,
+      required this.label,
+      required this.readOnly,
+      required this.prefixIcon,
+      this.onTap,
+      this.horizontalPadding = 25.0,
+      this.verticalPadding = 4.0});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0,vertical: 4.0),
+      padding: EdgeInsets.symmetric(
+          horizontal: horizontalPadding, vertical: verticalPadding),
       child: TextFormField(
-        validator: (value){
-          if(value == null || value.isEmpty){
+        validator: (value) {
+          if (value == null || value.isEmpty) {
             return "Enter $label";
           }
           return null;
@@ -31,15 +36,13 @@ class BuildTextForm extends StatelessWidget {
         autofocus: false,
         readOnly: readOnly,
         decoration: InputDecoration(
-            labelText: label,
-            prefixIcon: prefixIcon,
-            border: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFF124076))
-            ),
-            focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black)
-            ),
-            labelStyle: const TextStyle(color: Color(0xFF124076))
+          labelText: label,
+          prefixIcon: prefixIcon,
+          border: const OutlineInputBorder(
+              borderSide: BorderSide(color: Color(0xFF124076))),
+          focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.black)),
+          labelStyle: const TextStyle(color: Color(0xFF124076)),
         ),
       ),
     );
