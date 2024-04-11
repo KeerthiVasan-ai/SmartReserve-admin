@@ -10,12 +10,12 @@ class BuildLoginTextForm extends StatefulWidget {
 
   BuildLoginTextForm(
       {super.key,
-        required this.controller,
-        required this.label,
-        required this.readOnly,
-        required this.obscureText,
-        required this.isPassword,
-        this.onTap});
+      required this.controller,
+      required this.label,
+      required this.readOnly,
+      required this.obscureText,
+      required this.isPassword,
+      this.onTap});
 
   @override
   State<BuildLoginTextForm> createState() => _BuildLoginTextFormState();
@@ -50,18 +50,18 @@ class _BuildLoginTextFormState extends State<BuildLoginTextForm> {
               hintText: widget.label,
               suffixIcon: widget.isPassword
                   ? GestureDetector(
-                onTap: () {
-                  setState(() {
-                    widget.obscureText = !widget.obscureText;
-                  });
-                },
-                child: Icon(
-                  widget.obscureText
-                      ? Icons.visibility
-                      : Icons.visibility_off,
-                  color: Colors.grey,
-                ),
-              )
+                      onTap: () {
+                        setState(() {
+                          widget.obscureText = !widget.obscureText;
+                        });
+                      },
+                      child: Icon(
+                        widget.obscureText
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.grey,
+                      ),
+                    )
                   : null,
               border: InputBorder.none,
             ),

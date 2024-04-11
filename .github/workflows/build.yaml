@@ -36,7 +36,7 @@ jobs:
       - name: Release with Notes
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v1.2.0
+          tag_name: v1.3.0
           files: build/app/outputs/apk/release/app-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}

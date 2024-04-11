@@ -40,7 +40,10 @@ dependencies:
   cloud_firestore: ^4.15.0
   firebase_core: ^2.25.0
   google_fonts: ^6.2.0
-
+  syncfusion_flutter_xlsio: ^25.1.39
+  permission_handler: ^11.3.1
+  pdf: ^3.10.8
+  open_file: ^3.3.2
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +72,7 @@ flutter:
     - assets/background/bg1.jpg
     - assets/background/check1.jpg
     - assets/background/check2.jpg
+    - assets/logo/dept_logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
