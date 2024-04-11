@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       fontWeight: FontWeight.bold, fontSize: 24.0),
                 ),
                 Text(
-                  "v1.2.0",
+                  "v1.3.0-STABLE",
                   style: GoogleFonts.firaSans(
                       fontWeight: FontWeight.bold, fontSize: 12.0),
                 ),
