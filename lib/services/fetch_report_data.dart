@@ -66,7 +66,7 @@ class FetchReportData {
     }
     Navigator.pop(context);
     ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("Generated $fileFormat in Downloads")));
+        .showSnackBar(SnackBar(content: Text("Generated $fileFormat in Documents")));
     print(name.length);
   }
 
