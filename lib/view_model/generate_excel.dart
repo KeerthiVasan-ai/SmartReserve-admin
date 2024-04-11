@@ -1,6 +1,7 @@
 import "dart:developer" as dev;
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:smart_reserve_admin/utils/constants.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as excel;
 import '../utils/file_storage.dart';
 
@@ -39,7 +40,7 @@ class GenerateExcel {
     }
 
     final List<int> bytes = workbook.saveAsStream();
-    FileStorage.writeCounter(Uint8List.fromList(bytes), "2216-Hall-Booking-Report.xlsx");
+    FileStorage.writeCounter(Uint8List.fromList(bytes), "2216-Hall-Booking-Report-${Constants.date}.xlsx");
     dev.log("Success",name:"Log");
 
   }

@@ -12,7 +12,7 @@ class FileStorage {
     }
     Directory directory = Directory("");
     if (Platform.isAndroid) {
-      directory = Directory("/storage/emulated/0/Download");
+      directory = Directory("/storage/emulated/0/Documents");
     } else {
       directory = await getApplicationDocumentsDirectory();
     }
