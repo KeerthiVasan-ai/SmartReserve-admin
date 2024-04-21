@@ -73,7 +73,7 @@ class _ReportScreenState extends State<ReportScreen> {
     if (_reportFormKey.currentState!.validate()) {
       DateTime fromDateValue = DateFormat('dd-MM-yyyy').parse(fromDate.text);
       DateTime toDateValue = DateFormat('dd-MM-yyyy').parse(toDate.text);
-      if (fromDateValue.isBefore(toDateValue)) {
+      if (fromDateValue.isBefore(toDateValue) || fromDateValue == toDateValue) {
         FetchReportData(context)
             .fetchReportData(fromDate.text, toDate.text, _selectedFormat!);
       } else {
@@ -94,7 +94,10 @@ class _ReportScreenState extends State<ReportScreen> {
           onPressed: () {
             alert(_passwordController);
           },
-          child: const Icon(Icons.delete_forever,color: Colors.black,),
+          child: const Icon(
+            Icons.delete_forever,
+            color: Colors.black,
+          ),
         ),
         body: SafeArea(
           child: Center(
