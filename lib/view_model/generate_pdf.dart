@@ -34,7 +34,7 @@ class GeneratePDF {
       footer: (context) => buildFooter(),
     ));
 
-    return FileStorage.writeCounter(await pdf.save(), "2216-Hall-Booking-Report-${Constants.date}.pdf");
+    return FileStorage.writeCounter(await pdf.save(), "2216-Hall-Booking-Report-${Constants.fileContent}.pdf");
   }
 
   static Widget buildHeader(Uint8List byteImage, String fromDate,
