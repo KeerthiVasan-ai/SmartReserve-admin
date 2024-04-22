@@ -33,7 +33,7 @@ class BuildListBuilder extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${data['tokenNumber']}",
+                      "${data['name']}",
                       style: GoogleFonts.ebGaramond(
                           fontWeight: FontWeight.bold, fontSize: 16),
                     ),
