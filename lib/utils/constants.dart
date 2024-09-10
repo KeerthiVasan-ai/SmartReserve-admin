@@ -8,8 +8,8 @@ class Constants {
   static const appDescription = "App Developed by CSE Dept.";
   static const copyright = "Smart Reserve © Dept of CSE, FEAT, AU";
   static String date = DateFormat("dd-MM-yyyy").format(DateTime.now()).toString();
-  static String time = DateFormat.Hm().format(DateTime.now());
-  static String fileContent = "$date - $time";
+  static String time = DateTime.now().millisecondsSinceEpoch.toString();
+  static String fileContent = "$date-$time";
 
   static List<String> reportFormat = ["PDF","XLSX"];
 
