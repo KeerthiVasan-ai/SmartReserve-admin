@@ -40,8 +40,7 @@ class GenerateExcel {
     }
 
     final List<int> bytes = workbook.saveAsStream();
-    FileStorage.writeCounter(Uint8List.fromList(bytes), "2216-Hall-Booking-Report-${Constants.date}.xlsx");
+    FileStorage.writeCounter(Uint8List.fromList(bytes), "2216-Hall-Booking-Report-${Constants.fileContent}.xlsx");
     dev.log("Success",name:"Log");
-
   }
 }
