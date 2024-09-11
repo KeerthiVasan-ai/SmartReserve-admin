@@ -10,6 +10,7 @@ class FetchReportData {
 
   FetchReportData(this.context);
 
+  String loadingMessage = "Initiating";
   List<String> name = [];
   List<String> tokenNumber = [];
   List<String> courseCode = [];
@@ -20,8 +21,9 @@ class FetchReportData {
 
   void fetchReportData(
       String fromDate, String toDate, String fileFormat) async {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("Generating $fileFormat")));
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Initiating $fileFormat Generation")));
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -39,7 +41,8 @@ class FetchReportData {
           .doc(date)
           .collection("booking");
 
-      QuerySnapshot querySnapshot = await collectionRef.orderBy("slotKey").get();
+      QuerySnapshot querySnapshot =
+          await collectionRef.orderBy("slotKey").get();
 
       allData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
@@ -56,18 +59,27 @@ class FetchReportData {
         }
       }
     }
-    if (fileFormat == "XLSX") {
-      GenerateExcel(context).generateExcel(
-          tokenNumber, name, courseCode, dateList, firstSlots, secondSlots);
-    } else if (fileFormat == "PDF") {
-      final pdfFile = await GeneratePDF().generatePdf(fromDate, toDate,
-          tokenNumber, name, courseCode, dateList, firstSlots, secondSlots);
-      FileStorage.openFile(pdfFile);
+
+    try {
+      if (fileFormat == "XLSX") {
+        GenerateExcel(context).generateExcel(
+            tokenNumber, name, courseCode, dateList, firstSlots, secondSlots);
+      } else if (fileFormat == "PDF") {
+        final pdfFile = await GeneratePDF().generatePdf(fromDate, toDate,
+            tokenNumber, name, courseCode, dateList, firstSlots, secondSlots);
+        FileStorage.openFile(pdfFile);
+      }
+
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Generated $fileFormat in Documents")));
+      print(name.length);
+    } catch (ex) {
+      print(ex);
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Failed to Generate $fileFormat in Documents")));
     }
-    Navigator.pop(context);
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("Generated $fileFormat in Documents")));
-    print(name.length);
   }
 
   List<String> createDateList(String fromDateStr, String toDateStr) {
