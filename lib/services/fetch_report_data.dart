@@ -10,6 +10,7 @@ class FetchReportData {
 
   FetchReportData(this.context);
 
+  String loadingMessage = "Initiating";
   List<String> name = [];
   List<String> tokenNumber = [];
   List<String> courseCode = [];
@@ -22,6 +23,7 @@ class FetchReportData {
       String fromDate, String toDate, String fileFormat) async {
     ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Initiating $fileFormat Generation")));
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -57,6 +59,7 @@ class FetchReportData {
         }
       }
     }
+
     try {
       if (fileFormat == "XLSX") {
         GenerateExcel(context).generateExcel(
