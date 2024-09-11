@@ -7,10 +7,11 @@ class Constants {
   static const appName = "Smart Reserve";
   static const appDescription = "App Developed by CSE Dept.";
   static const copyright = "Smart Reserve © Dept of CSE, FEAT, AU";
-  static String date = DateFormat("dd-MM-yyyy").format(DateTime.now()).toString();
-  static String time = DateFormat.Hm().format(DateTime.now());
-  static String fileContent = "$date - $time";
+  static String date =
+      DateFormat("dd-MM-yyyy").format(DateTime.now()).toString();
+  static String time =
+      DateFormat.Hms().format(DateTime.now()).toString().replaceAll(":", "-");
 
-  static List<String> reportFormat = ["PDF","XLSX"];
-
+  static String fileContent = "$date-$time";
+  static List<String> reportFormat = ["PDF", "XLSX"];
 }
