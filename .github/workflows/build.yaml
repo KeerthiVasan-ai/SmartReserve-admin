@@ -36,13 +36,7 @@
 #          name: release-apk
 #          path: build/app/outputs/apk/release/app-release.apk
 #
-#      - name: Release with Notes
-#        uses: softprops/action-gh-release@v1
-#        with:
-#          tag_name: v1.3.0
-#          files: build/app/outputs/apk/release/app-release.apk
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+
 
 name: Build
 
@@ -88,14 +82,16 @@ jobs:
         run: flutter build apk --release
 
       - name: Upload APK Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
 
-      - name: Create GitHub Release
+      - name: Release with Notes
         uses: softprops/action-gh-release@v1
         with:
-          files: build/app/outputs/flutter-apk/app-release.apk
+          tag_name: v1.3.0
+          files: build/app/outputs/apk/release/app-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
+
