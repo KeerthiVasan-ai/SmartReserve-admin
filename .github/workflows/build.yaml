@@ -67,7 +67,8 @@ jobs:
       - name: Set up Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.3.0' # Specify stable version if possible
+          flutter-version: '3.13.0'  # Compatible with Dart 3.x
+      # Specify stable version if possible
 
       - name: Cache Flutter Dependencies
         uses: actions/cache@v3
