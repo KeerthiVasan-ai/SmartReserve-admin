@@ -1,4 +1,4 @@
-package com.example.smart_reserve_admin
+package com.keerthi77459.smartreserveadmin
 
 import io.flutter.embedding.android.FlutterActivity
 
