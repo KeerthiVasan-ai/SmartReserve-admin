@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:smart_reserve_admin/widgets/ui/frosted_glass.dart';
 
 
@@ -34,20 +34,20 @@ class BuildListBuilder extends StatelessWidget {
                   children: [
                     Text(
                       "${data['name']}",
-                      style: GoogleFonts.ebGaramond(
-                          fontWeight: FontWeight.bold, fontSize: 16),
+                      style: TextStyle(
+                          fontFamily: 'EBGaramond', fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     Text(
                       "${data['courseCode']}",
-                      style: GoogleFonts.ebGaramond(
-                          fontWeight: FontWeight.bold, fontSize: 16),
+                      style: TextStyle(
+                          fontFamily: 'EBGaramond', fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     Text("${data['date']}",
-                        style: GoogleFonts.ebGaramond(
-                            fontWeight: FontWeight.bold, fontSize: 16)),
+                        style: TextStyle(
+                            fontFamily: 'EBGaramond', fontWeight: FontWeight.bold, fontSize: 16)),
                     Text("Slots: ${data['slots'].join(', ')}",
-                        style: GoogleFonts.ebGaramond(
-                            fontWeight: FontWeight.bold, fontSize: 16)),
+                        style: TextStyle(
+                            fontFamily: 'EBGaramond', fontWeight: FontWeight.bold, fontSize: 16)),
                   ],
                 ),
               ],

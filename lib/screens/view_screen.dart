@@ -21,7 +21,7 @@ class _ViewScreenState extends State<ViewScreen> {
     return BackgroundShapes(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: buildAppBar("Booked Slots"),
+        appBar: BuildAppBar(title: "Booked Slots"),
         body: SafeArea(
           child: StreamBuilder(
             stream: FetchUserBooking.fetchBookingDetails(widget.selectedDate),

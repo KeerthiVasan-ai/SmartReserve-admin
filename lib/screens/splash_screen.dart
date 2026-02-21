@@ -1,8 +1,11 @@
 import "dart:async";
 
 import "package:flutter/material.dart";
-import "package:google_fonts/google_fonts.dart";
+
 import "package:smart_reserve_admin/widgets/ui/background_shapes.dart";
+import "package:smart_reserve_admin/screens/app_blocked_screen.dart";
+import "package:smart_reserve_admin/services/fetch_server.dart";
+import "package:smart_reserve_admin/utils/constants.dart";
 
 import "../services/auth.dart";
 
@@ -14,14 +17,53 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3),
-            ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const Auth()))
-    );
+    _checkAppStatus();
+  }
+
+  void _checkAppStatus() async {
+    final serverDetails =
+        await FetchServerDetails.checkIsAppUnderMaintenance();
+
+    final bool isUnderMaintenance =
+        serverDetails['isAppUnderMaintenance'] as bool;
+    final String version = serverDetails['version'] as String;
+
+    if (isUnderMaintenance) {
+      Timer(
+        const Duration(seconds: 3),
+        () => Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                AppBlockedScreen(state: AppBlockState.underMaintenance),
+          ),
+        ),
+      );
+    } else if (version != Constants.APP_VERSION) {
+      Timer(
+        const Duration(seconds: 3),
+        () => Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AppBlockedScreen(
+              state: AppBlockState.updateRequired,
+              version: version,
+            ),
+          ),
+        ),
+      );
+    } else {
+      Timer(
+        const Duration(seconds: 3),
+        () => Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const Auth()),
+        ),
+      );
+    }
   }
 
   @override
@@ -36,13 +78,17 @@ class _SplashScreenState extends State<SplashScreen> {
               children: [
                 Text(
                   "Smart Reserve - Admin",
-                  style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.bold, fontSize: 24.0),
+                  style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24.0),
                 ),
                 Text(
-                  "v1.3.0-STABLE",
-                  style: GoogleFonts.firaSans(
-                      fontWeight: FontWeight.bold, fontSize: 12.0),
+                  "v${Constants.APP_VERSION}-STABLE",
+                  style: TextStyle(
+                      fontFamily: 'FiraSans',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12.0),
                 ),
               ],
             ),

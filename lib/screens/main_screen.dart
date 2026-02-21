@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:intl/intl.dart';
 import 'package:smart_reserve_admin/screens/report_screen.dart';
 import 'package:smart_reserve_admin/screens/view_screen.dart';
+import 'package:smart_reserve_admin/widgets/app_drawer.dart';
 import 'package:smart_reserve_admin/widgets/build_elevated_button.dart';
 import 'package:smart_reserve_admin/widgets/build_text_filed.dart';
 import 'package:smart_reserve_admin/widgets/ui/background_shapes.dart';
@@ -16,6 +17,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   late TextEditingController myDate;
   final _formKey = GlobalKey<FormState>();
 
@@ -33,8 +35,8 @@ class _MainScreenState extends State<MainScreen> {
     DateTime? picker = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime.now(),
-        lastDate: DateTime.now().add(const Duration(days: 20)));
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2100));
 
     if (picker != null) {
       setState(() {
@@ -61,7 +63,9 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return BackgroundShapes(
       child: Scaffold(
+        key: _scaffoldKey,
         backgroundColor: Colors.transparent,
+        drawer: AppDrawer(scaffoldKey: _scaffoldKey),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.white,
           onPressed: reportGenerateRoute,
@@ -70,7 +74,7 @@ class _MainScreenState extends State<MainScreen> {
         appBar: AppBar(
           title: Text(
             "Smart Reserve - Admin",
-            style: GoogleFonts.poppins(
+            style: TextStyle(fontFamily: 'Poppins',
               fontWeight: FontWeight.bold,
               fontSize: 18,
             ),

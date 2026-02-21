@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:google_fonts/google_fonts.dart";
+
 import "package:smart_reserve_admin/services/fetch_server.dart";
 
 import "../services/delete_booking.dart";
@@ -20,7 +20,7 @@ class BuildDialog {
         return AlertDialog(
           title: Text(
             'Alert !!',
-            style: GoogleFonts.poppins(
+            style: TextStyle(fontFamily: 'Poppins',
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
@@ -35,7 +35,7 @@ class BuildDialog {
               children: [
                 Text(
                   "Sensitive Operation ! Are you sure want to delete all the booking details ?",
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
@@ -45,7 +45,7 @@ class BuildDialog {
                 ),
                 Text(
                   "Enter the Admin Password",
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,
                     fontSize: 12,
                   ),
@@ -64,7 +64,7 @@ class BuildDialog {
                 const SizedBox(height: 10.0,),
                 Text(
                   "Hint : Take a Report Before Deleting",
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,
                     fontSize: 8,
                   ),

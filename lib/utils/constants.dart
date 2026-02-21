@@ -14,4 +14,12 @@ class Constants {
 
   static String fileContent = "$date-$time";
   static List<String> reportFormat = ["PDF", "XLSX"];
+
+  // App version & maintenance
+  static const APP_VERSION = '1.3.0';
+  static const UNDER_MAINTENANCE =
+      "The App is Currently Under Maintenance. \n Sorry for the Inconvenience";
+  static const NEW_VERSION_AVAILABLE = "Update Available";
+  static const APP_URL =
+      "https://github.com/KeerthiVasan-ai/SmartReserve-admin/releases/tag/v";
 }
