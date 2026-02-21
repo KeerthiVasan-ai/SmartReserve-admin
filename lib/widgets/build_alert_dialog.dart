@@ -20,7 +20,8 @@ class BuildDialog {
         return AlertDialog(
           title: Text(
             'Alert !!',
-            style: TextStyle(fontFamily: 'Poppins',
+            style: TextStyle(
+              fontFamily: 'Poppins',
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
@@ -35,7 +36,8 @@ class BuildDialog {
               children: [
                 Text(
                   "Sensitive Operation ! Are you sure want to delete all the booking details ?",
-                  style: TextStyle(fontFamily: 'Poppins',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
@@ -45,7 +47,8 @@ class BuildDialog {
                 ),
                 Text(
                   "Enter the Admin Password",
-                  style: TextStyle(fontFamily: 'Poppins',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,
                     fontSize: 12,
                   ),
@@ -61,10 +64,13 @@ class BuildDialog {
                   horizontalPadding: 0.0,
                   verticalPadding: 0.0,
                 ),
-                const SizedBox(height: 10.0,),
+                const SizedBox(
+                  height: 10.0,
+                ),
                 Text(
                   "Hint : Take a Report Before Deleting",
-                  style: TextStyle(fontFamily: 'Poppins',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,
                     fontSize: 8,
                   ),

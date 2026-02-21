@@ -7,7 +7,6 @@ import "../screens/main_screen.dart";
 import "../screens/restricted_access_screen.dart";
 import "../widgets/ui/background_shapes.dart";
 
-
 class Auth extends StatelessWidget {
   const Auth({Key? key}) : super(key: key);
 
@@ -15,15 +14,15 @@ class Auth extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return _AdminGate(user: snapshot.data!);
-            } else {
-              return const LoginScreen();
-            }
-          },
-        ));
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return _AdminGate(user: snapshot.data!);
+        } else {
+          return const LoginScreen();
+        }
+      },
+    ));
   }
 }
 

@@ -7,9 +7,9 @@ import "package:smart_reserve_admin/widgets/ui/background_shapes.dart";
 import "../services/fetch_user_booking.dart";
 
 class ViewScreen extends StatefulWidget {
-  ViewScreen({super.key,required this.selectedDate});
+  ViewScreen({super.key, required this.selectedDate});
 
-  String selectedDate;
+  final String selectedDate;
 
   @override
   State<ViewScreen> createState() => _ViewScreenState();
@@ -44,7 +44,9 @@ class _ViewScreenState extends State<ViewScreen> {
                 );
               }
 
-              return BuildListBuilder(bookings: snapshot.data!.docs.toList(),);
+              return BuildListBuilder(
+                bookings: snapshot.data!.docs.toList(),
+              );
             },
           ),
         ),
@@ -52,4 +54,3 @@ class _ViewScreenState extends State<ViewScreen> {
     );
   }
 }
-

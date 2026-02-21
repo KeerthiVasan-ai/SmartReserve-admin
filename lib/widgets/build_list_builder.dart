@@ -3,14 +3,10 @@ import 'package:flutter/material.dart';
 
 import 'package:smart_reserve_admin/widgets/ui/frosted_glass.dart';
 
-
 class BuildListBuilder extends StatelessWidget {
   final List<DocumentSnapshot> bookings;
 
-  const BuildListBuilder(
-      {required this.bookings,
-        super.key});
-
+  const BuildListBuilder({required this.bookings, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,19 +31,27 @@ class BuildListBuilder extends StatelessWidget {
                     Text(
                       "${data['name']}",
                       style: TextStyle(
-                          fontFamily: 'EBGaramond', fontWeight: FontWeight.bold, fontSize: 16),
+                          fontFamily: 'EBGaramond',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
                     ),
                     Text(
                       "${data['courseCode']}",
                       style: TextStyle(
-                          fontFamily: 'EBGaramond', fontWeight: FontWeight.bold, fontSize: 16),
+                          fontFamily: 'EBGaramond',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
                     ),
                     Text("${data['date']}",
                         style: TextStyle(
-                            fontFamily: 'EBGaramond', fontWeight: FontWeight.bold, fontSize: 16)),
+                            fontFamily: 'EBGaramond',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16)),
                     Text("Slots: ${data['slots'].join(', ')}",
                         style: TextStyle(
-                            fontFamily: 'EBGaramond', fontWeight: FontWeight.bold, fontSize: 16)),
+                            fontFamily: 'EBGaramond',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16)),
                   ],
                 ),
               ],

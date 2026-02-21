@@ -13,8 +13,9 @@ class StaffAccessScreen extends StatefulWidget {
 
 class _StaffAccessScreenState extends State<StaffAccessScreen> {
   // Stream to listen to changes in staffaccess collection
-  final Stream<QuerySnapshot> _accessStream =
-      FirebaseFirestore.instance.collection(FirebaseConstants.staffAccess).snapshots();
+  final Stream<QuerySnapshot> _accessStream = FirebaseFirestore.instance
+      .collection(FirebaseConstants.staffAccess)
+      .snapshots();
 
   // Cache futures to prevent re-fetching on scroll/rebuild
   final Map<String, Future<DocumentSnapshot>> _userFutureCache = {};
@@ -24,7 +25,6 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
 
   // Permanent admins list from constants/server
   List<String> _permanentAdmins = [];
-  bool _permanentAdminsLoaded = false;
 
   // Search state
   bool _isSearching = false;
@@ -48,16 +48,12 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
         if (data != null && data['permanentAdmins'] != null) {
           setState(() {
             _permanentAdmins = List<String>.from(data['permanentAdmins']);
-            _permanentAdminsLoaded = true;
           });
         } else {
-          setState(() => _permanentAdminsLoaded = true);
         }
       } else {
-        setState(() => _permanentAdminsLoaded = true);
       }
     } catch (_) {
-      setState(() => _permanentAdminsLoaded = true);
     }
   }
 
@@ -77,7 +73,7 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
           .then((snapshot) {
         // Cache the resolved data
         if (snapshot.exists) {
-          _resolvedUserData[uid] = snapshot.data() as Map<String, dynamic>?;
+          _resolvedUserData[uid] = snapshot.data();
         } else {
           _resolvedUserData[uid] = null;
         }
@@ -99,7 +95,8 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
                   style: TextStyle(fontFamily: 'Poppins', fontSize: 16),
                   decoration: InputDecoration(
                     hintText: 'Search staff...',
-                    hintStyle: TextStyle(fontFamily: 'Poppins', color: Colors.grey),
+                    hintStyle:
+                        TextStyle(fontFamily: 'Poppins', color: Colors.grey),
                     border: InputBorder.none,
                   ),
                   onChanged: (value) {
@@ -108,7 +105,8 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
                 )
               : Text(
                   "Staff Access Control",
-                  style: TextStyle(fontFamily: 'Poppins',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
@@ -143,7 +141,7 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
               return Center(
                 child: Text(
                   'Something went wrong',
-                  style: TextStyle(fontFamily: 'Poppins',fontSize: 16),
+                  style: TextStyle(fontFamily: 'Poppins', fontSize: 16),
                 ),
               );
             }
@@ -162,7 +160,8 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
                     const SizedBox(height: 16),
                     Text(
                       "No staff access data available.",
-                      style: TextStyle(fontFamily: 'Poppins',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
                         fontSize: 16,
                         color: Colors.grey.shade600,
                       ),
@@ -183,7 +182,8 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
                 : snapshot.data!.docs.where((doc) {
                     final cached = _resolvedUserData[doc.id];
                     if (cached == null) return true; // Show unresolved items
-                    final name = (cached['name'] ?? '').toString().toLowerCase();
+                    final name =
+                        (cached['name'] ?? '').toString().toLowerCase();
                     return name.contains(_searchQuery);
                   }).toList();
 
@@ -197,7 +197,8 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
                     const SizedBox(height: 16),
                     Text(
                       'No results for "$_searchQuery"',
-                      style: TextStyle(fontFamily: 'Poppins',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
                         fontSize: 16,
                         color: Colors.grey.shade600,
                       ),
@@ -313,13 +314,12 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.25),
+        color: Colors.white.withValues(alpha:0.25),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.white.withOpacity(0.60)),
+        border: Border.all(color: Colors.white.withValues(alpha:0.60)),
       ),
       child: ListTile(
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         leading: CircleAvatar(
           backgroundColor: statusColor,
           child: Icon(
@@ -348,8 +348,8 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
         trailing: Switch(
           value: isAdmin,
           onChanged: onChanged,
-          activeColor: const Color(0xFF2D9596),
-          activeTrackColor: const Color(0xFF2D9596).withOpacity(0.40),
+          activeThumbColor: const Color(0xFF2D9596),
+          activeTrackColor: const Color(0xFF2D9596).withValues(alpha:0.40),
         ),
       ),
     );

@@ -6,13 +6,16 @@ class FetchServerDetails {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   static Future<String?> fetchPwd() async {
-    try{
-      DocumentSnapshot<Map<String,dynamic>> snapshot = await _firestore.collection(FirebaseConstants.constants).doc(FirebaseConstants.server).get();
+    try {
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await _firestore
+          .collection(FirebaseConstants.constants)
+          .doc(FirebaseConstants.server)
+          .get();
       String? password = snapshot.data()?['password'];
-      dev.log(password!,name: "Password");
+      dev.log(password!, name: "Password");
       return password;
-    } catch(error){
-      dev.log(error.toString(),name:"Error");
+    } catch (error) {
+      dev.log(error.toString(), name: "Error");
       return null;
     }
   }

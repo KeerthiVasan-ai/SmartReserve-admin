@@ -8,7 +8,8 @@ class FetchUserBooking {
     return FirebaseFirestore.instance
         .collection(FirebaseConstants.bookingDetails)
         .doc(date)
-        .collection(FirebaseConstants.booking).orderBy("slotKey")
+        .collection(FirebaseConstants.booking)
+        .orderBy("slotKey")
         .snapshots();
   }
 }

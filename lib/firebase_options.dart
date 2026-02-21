@@ -65,5 +65,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'smartreserve-337c2.firebasestorage.app',
     iosBundleId: 'com.keerthi77459.smartreserveadmin',
   );
-
 }

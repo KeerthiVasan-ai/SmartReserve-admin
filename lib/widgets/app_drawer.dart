@@ -11,7 +11,7 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.white.withOpacity(0.92),
+      backgroundColor: Colors.white.withValues(alpha:0.92),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(20),
@@ -42,7 +42,7 @@ class AppDrawer extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha:0.2),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: const Icon(
@@ -54,7 +54,8 @@ class AppDrawer extends StatelessWidget {
                 const SizedBox(height: 12),
                 Text(
                   'Smart Reserve',
-                  style: TextStyle(fontFamily: 'Poppins',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
                     color: Colors.white,
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -62,8 +63,9 @@ class AppDrawer extends StatelessWidget {
                 ),
                 Text(
                   'Admin Panel',
-                  style: TextStyle(fontFamily: 'Poppins',
-                    color: Colors.white.withOpacity(0.85),
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    color: Colors.white.withValues(alpha:0.85),
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
                   ),
@@ -130,14 +132,15 @@ class _DrawerItem extends StatelessWidget {
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: iconColor.withOpacity(0.15),
+            color: iconColor.withValues(alpha:0.15),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(icon, color: iconColor, size: 22),
         ),
         title: Text(
           title,
-          style: TextStyle(fontFamily: 'Poppins',
+          style: TextStyle(
+            fontFamily: 'Poppins',
             fontSize: 15,
             fontWeight: FontWeight.w500,
           ),
@@ -147,8 +150,8 @@ class _DrawerItem extends StatelessWidget {
           color: Colors.black,
         ),
         onTap: onTap,
-        hoverColor: iconColor.withOpacity(0.08),
-        splashColor: iconColor.withOpacity(0.12),
+        hoverColor: iconColor.withValues(alpha:0.08),
+        splashColor: iconColor.withValues(alpha:0.12),
       ),
     );
   }

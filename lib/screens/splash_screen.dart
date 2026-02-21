@@ -24,8 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _checkAppStatus() async {
-    final serverDetails =
-        await FetchServerDetails.checkIsAppUnderMaintenance();
+    final serverDetails = await FetchServerDetails.checkIsAppUnderMaintenance();
 
     final bool isUnderMaintenance =
         serverDetails['isAppUnderMaintenance'] as bool;

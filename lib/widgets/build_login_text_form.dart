@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 
+// ignore: must_be_immutable
 class BuildLoginTextForm extends StatefulWidget {
   final TextEditingController controller;
   final String label;

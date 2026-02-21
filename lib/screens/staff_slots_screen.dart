@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smart_reserve_admin/utils/firebase_constants.dart';
 import 'package:flutter/material.dart';
 
-import 'package:smart_reserve_admin/widgets/build_app_bar.dart';
 import 'package:smart_reserve_admin/widgets/ui/background_shapes.dart';
 
 class StaffSlotsScreen extends StatefulWidget {
@@ -14,10 +13,9 @@ class StaffSlotsScreen extends StatefulWidget {
 
 class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
   // Stream to listen to changes in allotedSlot collection
-  final Stream<QuerySnapshot> _slotsStream =
-      FirebaseFirestore.instance
-          .collection(FirebaseConstants.allottedSlots)
-          .snapshots();
+  final Stream<QuerySnapshot> _slotsStream = FirebaseFirestore.instance
+      .collection(FirebaseConstants.allottedSlots)
+      .snapshots();
 
   // Cache futures to prevent re-fetching on scroll/rebuild
   final Map<String, Future<DocumentSnapshot>> _userFutureCache = {};
@@ -51,7 +49,7 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
           .then((snapshot) {
         // Cache the resolved data
         if (snapshot.exists) {
-          _resolvedUserData[uid] = snapshot.data() as Map<String, dynamic>?;
+          _resolvedUserData[uid] = snapshot.data();
         } else {
           _resolvedUserData[uid] = null;
         }
@@ -96,7 +94,9 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
           SnackBar(
             content: Text(
               'Slot counts updated successfully!',
-              style: TextStyle(fontFamily: 'Poppins',),
+              style: TextStyle(
+                fontFamily: 'Poppins',
+              ),
             ),
             backgroundColor: const Color(0xFF2D9596),
           ),
@@ -108,7 +108,9 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
           SnackBar(
             content: Text(
               'Failed to update: $e',
-              style: TextStyle(fontFamily: 'Poppins',),
+              style: TextStyle(
+                fontFamily: 'Poppins',
+              ),
             ),
             backgroundColor: Colors.redAccent,
           ),
@@ -132,7 +134,8 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
                   style: TextStyle(fontFamily: 'Poppins', fontSize: 16),
                   decoration: InputDecoration(
                     hintText: 'Search staff...',
-                    hintStyle: TextStyle(fontFamily: 'Poppins', color: Colors.grey),
+                    hintStyle:
+                        TextStyle(fontFamily: 'Poppins', color: Colors.grey),
                     border: InputBorder.none,
                   ),
                   onChanged: (value) {
@@ -141,7 +144,8 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
                 )
               : Text(
                   "Staff Slot Counts",
-                  style: TextStyle(fontFamily: 'Poppins',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
@@ -175,13 +179,10 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
                 return IconButton(
                   icon: Icon(
                     _isEditing ? Icons.close_rounded : Icons.edit_rounded,
-                    color: _isEditing
-                        ? Colors.redAccent
-                        : Colors.black,
+                    color: _isEditing ? Colors.redAccent : Colors.black,
                   ),
                   tooltip: _isEditing ? 'Cancel' : 'Edit Slots',
-                  onPressed: () =>
-                      _toggleEditMode(snapshot.data!.docs),
+                  onPressed: () => _toggleEditMode(snapshot.data!.docs),
                 );
               },
             ),
@@ -210,7 +211,8 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
                           )
                         : Text(
                             'SAVE CHANGES',
-                            style: TextStyle(fontFamily: 'Poppins',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
                               color: Colors.white,
@@ -218,14 +220,12 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
                           ),
                     icon: _isSaving
                         ? null
-                        : const Icon(Icons.check_rounded,
-                            color: Colors.white),
+                        : const Icon(Icons.check_rounded, color: Colors.white),
                   ),
                 ),
               )
             : null,
-        floatingActionButtonLocation:
-            FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: StreamBuilder<QuerySnapshot>(
           stream: _slotsStream,
           builder:
@@ -234,7 +234,7 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
               return Center(
                 child: Text(
                   'Something went wrong',
-                  style: TextStyle(fontFamily: 'Poppins',fontSize: 16),
+                  style: TextStyle(fontFamily: 'Poppins', fontSize: 16),
                 ),
               );
             }
@@ -248,12 +248,12 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.inbox_rounded,
-                        size: 64, color: Colors.black54),
+                    Icon(Icons.inbox_rounded, size: 64, color: Colors.black54),
                     const SizedBox(height: 16),
                     Text(
                       "No staff slots data available.",
-                      style: TextStyle(fontFamily: 'Poppins',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
                         fontSize: 16,
                         color: Colors.grey.shade600,
                       ),
@@ -274,7 +274,8 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
                 : snapshot.data!.docs.where((doc) {
                     final cached = _resolvedUserData[doc.id];
                     if (cached == null) return true; // Show unresolved items
-                    final name = (cached['name'] ?? '').toString().toLowerCase();
+                    final name =
+                        (cached['name'] ?? '').toString().toLowerCase();
                     return name.contains(_searchQuery);
                   }).toList();
 
@@ -288,7 +289,8 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
                     const SizedBox(height: 16),
                     Text(
                       'No results for "$_searchQuery"',
-                      style: TextStyle(fontFamily: 'Poppins',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
                         fontSize: 16,
                         color: Colors.grey.shade600,
                       ),
@@ -324,9 +326,7 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
                   String paramName = userData['name'] ?? 'No Name';
                   return _buildCard(
                     leading: _buildAvatar(
-                      paramName.isNotEmpty
-                          ? paramName[0].toUpperCase()
-                          : '?',
+                      paramName.isNotEmpty ? paramName[0].toUpperCase() : '?',
                       const Color(0xFF2D9596),
                     ),
                     title: paramName,
@@ -363,9 +363,7 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
 
                     return _buildCard(
                       leading: _buildAvatar(
-                        paramName.isNotEmpty
-                            ? paramName[0].toUpperCase()
-                            : '?',
+                        paramName.isNotEmpty ? paramName[0].toUpperCase() : '?',
                         const Color(0xFF2D9596),
                       ),
                       title: paramName,
@@ -402,7 +400,8 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
           alignment: Alignment.center,
           child: Text(
             '${_editedSlots[uid] ?? slotCount}',
-            style: TextStyle(fontFamily: 'Poppins',
+            style: TextStyle(
+              fontFamily: 'Poppins',
               fontWeight: FontWeight.bold,
               fontSize: 16,
               color: const Color(0xFF1A6B6C),
@@ -432,10 +431,10 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
         width: 32,
         height: 32,
         decoration: BoxDecoration(
-          color: const Color(0xFF2D9596).withOpacity(0.15),
+          color: const Color(0xFF2D9596).withValues(alpha: 0.15),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: const Color(0xFF2D9596).withOpacity(0.40),
+            color: const Color(0xFF2D9596).withValues(alpha:0.40),
           ),
         ),
         child: Icon(icon, size: 18, color: const Color(0xFF2D9596)),
@@ -451,17 +450,16 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.25),
+        color: Colors.white.withValues(alpha:0.25),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.white.withOpacity(0.60)),
+        border: Border.all(color: Colors.white.withValues(alpha:0.60)),
       ),
       child: ListTile(
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         leading: leading,
         title: Text(
           title,
-          style: TextStyle(fontFamily: 'Poppins',fontWeight: FontWeight.bold),
+          style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold),
         ),
         trailing: trailing,
       ),
@@ -473,7 +471,8 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
       backgroundColor: color,
       child: Text(
         letter,
-        style: TextStyle(fontFamily: 'Poppins',
+        style: TextStyle(
+          fontFamily: 'Poppins',
           color: Colors.white,
           fontWeight: FontWeight.bold,
         ),
@@ -485,15 +484,16 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
       decoration: BoxDecoration(
-        color: const Color(0xFF2D9596).withOpacity(0.18),
+        color: const Color(0xFF2D9596).withValues(alpha:0.18),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: const Color(0xFF2D9596).withOpacity(0.40),
+          color: const Color(0xFF2D9596).withValues(alpha:0.40),
         ),
       ),
       child: Text(
         "$count Slots",
-        style: TextStyle(fontFamily: 'Poppins',
+        style: TextStyle(
+          fontFamily: 'Poppins',
           fontWeight: FontWeight.bold,
           fontSize: 13,
           color: const Color(0xFF1A6B6C),

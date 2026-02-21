@@ -69,12 +69,16 @@ class _MainScreenState extends State<MainScreen> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.white,
           onPressed: reportGenerateRoute,
-          child: const Icon(Icons.file_present_rounded,color: Colors.black,),
+          child: const Icon(
+            Icons.file_present_rounded,
+            color: Colors.black,
+          ),
         ),
         appBar: AppBar(
           title: Text(
             "Smart Reserve - Admin",
-            style: TextStyle(fontFamily: 'Poppins',
+            style: TextStyle(
+              fontFamily: 'Poppins',
               fontWeight: FontWeight.bold,
               fontSize: 18,
             ),

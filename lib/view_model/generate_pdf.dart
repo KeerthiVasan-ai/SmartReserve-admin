@@ -7,20 +7,21 @@ import 'package:smart_reserve_admin/utils/constants.dart';
 import 'package:smart_reserve_admin/utils/file_storage.dart';
 
 class GeneratePDF {
-  Future<File> generatePdf(String fromDate,
-      String toDate,
-      List<String> tokenNumber,
-      List<String> name,
-      List<String> courseName,
-      List<String> dateList,
-      List<String> firstSlot,
-      List<String> secondSlot,) async {
+  Future<File> generatePdf(
+    String fromDate,
+    String toDate,
+    List<String> tokenNumber,
+    List<String> name,
+    List<String> courseName,
+    List<String> dateList,
+    List<String> firstSlot,
+    List<String> secondSlot,
+  ) async {
     final pdf = Document();
     final ByteData bytes = await rootBundle.load('assets/logo/dept_logo.png');
     final Uint8List byteList = bytes.buffer.asUint8List();
     pdf.addPage(MultiPage(
-      build: (context) =>
-      [
+      build: (context) => [
         buildHeader(byteList, fromDate, toDate),
         buildBookingDetails(
           tokenNumber,
@@ -34,11 +35,12 @@ class GeneratePDF {
       footer: (context) => buildFooter(),
     ));
 
-    return FileStorage.writeCounter(await pdf.save(), "2216-Hall-Booking-Report-${Constants.fileContent}.pdf");
+    return FileStorage.writeCounter(await pdf.save(),
+        "2216-Hall-Booking-Report-${Constants.fileContent}.pdf");
   }
 
-  static Widget buildHeader(Uint8List byteImage, String fromDate,
-      String toDate) =>
+  static Widget buildHeader(
+          Uint8List byteImage, String fromDate, String toDate) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -80,8 +82,8 @@ class GeneratePDF {
         ],
       );
 
-  static Widget buildUniversityDetails(String universityName,
-      String facultyName, String deptName) =>
+  static Widget buildUniversityDetails(
+          String universityName, String facultyName, String deptName) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -92,8 +94,7 @@ class GeneratePDF {
         ],
       );
 
-  static Widget buildDisplayText(String dateType, String date) =>
-      Row(
+  static Widget buildDisplayText(String dateType, String date) => Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(dateType, style: TextStyle(fontWeight: FontWeight.bold)),
@@ -101,27 +102,29 @@ class GeneratePDF {
         ],
       );
 
-  static Widget buildTitle(String title, String desc) =>
-      Column(
+  static Widget buildTitle(String title, String desc) => Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(title),
           SizedBox(height: 10.0),
           Text(desc),
-        ],);
+        ],
+      );
 
-  static Widget buildBookingDetails(List<String> tokenNumber,
-      List<String> name,
-      List<String> courseName,
-      List<String> dateList,
-      List<String> firstSlot,
-      List<String> secondSlot,) {
+  static Widget buildBookingDetails(
+    List<String> tokenNumber,
+    List<String> name,
+    List<String> courseName,
+    List<String> dateList,
+    List<String> firstSlot,
+    List<String> secondSlot,
+  ) {
     final header = ["S. No", 'Token No.', "Name", "Course", "Date", "Slots"];
     final List<List<String>> data = [];
     for (int i = 0; i < tokenNumber.length; i++) {
       List<String> values = [
-        "${i+1}",
+        "${i + 1}",
         tokenNumber[i],
         name[i],
         courseName[i],
@@ -159,8 +162,7 @@ class GeneratePDF {
         Divider(),
         SizedBox(height: 2 * PdfPageFormat.mm),
         buildDisplayText("Report Generated on :",
-            DateFormat("dd-MM-yyyy").format(
-                DateTime.now()).toString()),
+            DateFormat("dd-MM-yyyy").format(DateTime.now()).toString()),
         buildDisplayText(Constants.copyright, "")
       ]);
 }

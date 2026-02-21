@@ -118,7 +118,8 @@ class _ReportScreenState extends State<ReportScreen> {
                       children: [
                         Text(
                           "Generate Report",
-                          style: TextStyle(fontFamily: 'Poppins',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),

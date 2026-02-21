@@ -35,9 +35,8 @@ class _AppBlockedScreenState extends State<AppBlockedScreen> {
         ? Colors.orangeAccent.shade700
         : Colors.blueAccent;
 
-    final String? actionText = widget.state == AppBlockState.updateRequired
-        ? "Update Now"
-        : null;
+    final String? actionText =
+        widget.state == AppBlockState.updateRequired ? "Update Now" : null;
 
     return BackgroundShapes(
       child: Scaffold(

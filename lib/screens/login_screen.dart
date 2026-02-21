@@ -1,7 +1,6 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 
-
 import "../widgets/ui/background_shapes.dart";
 import "/widgets/build_elevated_button.dart";
 import "/widgets/build_login_text_form.dart";
@@ -38,8 +37,8 @@ class _LoginScreenState extends State<LoginScreen> {
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text("Invalid Email")));
         } else if (e.code == 'invalid-credential') {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text("Check your Credentials")));
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Check your Credentials")));
         }
       } catch (e) {
         print(e.toString());
@@ -69,14 +68,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Text(
                             "Hello,",
-                            style: TextStyle(fontFamily: 'Poppins',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.bold,
                               fontSize: 40,
                             ),
                           ),
                           Text(
                             "Welcome Back!",
-                            style: TextStyle(fontFamily: 'Poppins',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.bold,
                               fontSize: 24,
                             ),
