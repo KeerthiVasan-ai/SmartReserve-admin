@@ -51,18 +51,19 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCYdHcd-joXcwk7bEwkDE4WQwNZz4Q3gAk',
-    appId: '1:511021557254:android:ead0cba32ee6cb38934587',
+    appId: '1:511021557254:android:745c210fa10e2c9d934587',
     messagingSenderId: '511021557254',
     projectId: 'smartreserve-337c2',
-    storageBucket: 'smartreserve-337c2.appspot.com',
+    storageBucket: 'smartreserve-337c2.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDCrSjbUGcdGfHiXrNMf1kysobRugmbvGs',
-    appId: '1:511021557254:ios:03099dba1434c72a934587',
+    appId: '1:511021557254:ios:06adbca111eb3843934587',
     messagingSenderId: '511021557254',
     projectId: 'smartreserve-337c2',
-    storageBucket: 'smartreserve-337c2.appspot.com',
-    iosBundleId: 'com.example.smartReserveAdmin',
+    storageBucket: 'smartreserve-337c2.firebasestorage.app',
+    iosBundleId: 'com.keerthi77459.smartreserveadmin',
   );
+
 }
