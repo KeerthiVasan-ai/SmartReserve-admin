@@ -50,7 +50,7 @@ class _BackgroundShapesState extends State<BackgroundShapes>
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 60, sigmaY: 60),
             child: Container(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha:0.1),
             ),
           ),
           widget.child,

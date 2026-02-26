@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:smart_reserve_admin/utils/firebase_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_reserve_admin/utils/file_storage.dart';
@@ -37,9 +38,9 @@ class FetchReportData {
     List<String> dates = createDateList(fromDate, toDate);
     for (var date in dates) {
       CollectionReference collectionRef = FirebaseFirestore.instance
-          .collection('bookingDetails')
+          .collection(FirebaseConstants.bookingDetails)
           .doc(date)
-          .collection("booking");
+          .collection(FirebaseConstants.booking);
 
       QuerySnapshot querySnapshot =
           await collectionRef.orderBy("slotKey").get();

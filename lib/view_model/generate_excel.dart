@@ -7,9 +7,9 @@ import '../utils/file_storage.dart';
 
 class GenerateExcel {
   final BuildContext context;
-  
+
   GenerateExcel(this.context);
-  
+
   void generateExcel(
       List<String> tokenNumber,
       List<String> name,
@@ -17,7 +17,6 @@ class GenerateExcel {
       List<String> date,
       List<String> firstSlots,
       List<String> secondSlots) {
-
     final excel.Workbook workbook = excel.Workbook();
     final excel.Worksheet sheet = workbook.worksheets[0];
 
@@ -29,7 +28,7 @@ class GenerateExcel {
     sheet.getRangeByIndex(1, 6).setText("Slots");
 
     for (var i = 0; i < tokenNumber.length; i++) {
-      sheet.getRangeByIndex(i + 2, 1).setText("${i+1}");
+      sheet.getRangeByIndex(i + 2, 1).setText("${i + 1}");
       sheet.getRangeByIndex(i + 2, 2).setText(tokenNumber[i]);
       sheet.getRangeByIndex(i + 2, 3).setText(name[i]);
       sheet.getRangeByIndex(i + 2, 4).setText(courseCode[i]);
@@ -40,7 +39,8 @@ class GenerateExcel {
     }
 
     final List<int> bytes = workbook.saveAsStream();
-    FileStorage.writeCounter(Uint8List.fromList(bytes), "2216-Hall-Booking-Report-${Constants.fileContent}.xlsx");
-    dev.log("Success",name:"Log");
+    FileStorage.writeCounter(Uint8List.fromList(bytes),
+        "2216-Hall-Booking-Report-${Constants.fileContent}.xlsx");
+    dev.log("Success", name: "Log");
   }
 }

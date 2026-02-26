@@ -12,7 +12,7 @@ class FileStorage {
       // For Android, use the standard Downloads path
       // Android 10+ (API 29+) allows writing to Downloads without special permissions
       // Android 9 and below need WRITE_EXTERNAL_STORAGE (handled in manifest with maxSdkVersion)
-      
+
       // Check if we need storage permission (only for Android 9 and below)
       var status = await Permission.storage.status;
       if (!status.isGranted) {
@@ -23,11 +23,11 @@ class FileStorage {
           return directory.path;
         }
       }
-      
+
       // Use the standard Downloads path
       const downloadsPath = '/storage/emulated/0/Download';
       final directory = Directory(downloadsPath);
-      
+
       // Check if directory exists and is accessible
       if (await directory.exists()) {
         print("Saved Path: $downloadsPath");
