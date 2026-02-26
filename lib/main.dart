@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Smart Reserve Admin",
-      home:  SplashScreen(),
+      home: SplashScreen(),
     );
   }
 }

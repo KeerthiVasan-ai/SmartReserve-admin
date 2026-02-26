@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:smart_reserve_admin/utils/constants.dart';
 
 class BuildDropDownMenu extends StatefulWidget {
-  String selectedFormat;
-  String label;
-  Icon prefixIcon;
-  Function(String) onChanged;
+  final String selectedFormat;
+  final String label;
+  final Icon prefixIcon;
+  final Function(String) onChanged;
 
   BuildDropDownMenu({
     required this.selectedFormat,
@@ -31,7 +31,7 @@ class _BuildDropDownMenuState extends State<BuildDropDownMenu> {
           }
           return null;
         },
-        value: widget.selectedFormat,
+        initialValue: widget.selectedFormat,
         items: Constants.reportFormat
             .map((e) => DropdownMenuItem(value: e, child: Text(e)))
             .toList(),
