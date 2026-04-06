@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
-import 'package:smart_reserve_admin/screens/report_screen.dart';
+import 'package:smart_reserve_admin/screens/create_user_screen.dart';
 import 'package:smart_reserve_admin/screens/view_screen.dart';
 import 'package:smart_reserve_admin/widgets/app_drawer.dart';
 import 'package:smart_reserve_admin/widgets/build_elevated_button.dart';
@@ -45,9 +45,9 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-  void reportGenerateRoute() {
+  void _navigateToCreateUser() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const ReportScreen()));
+        context, MaterialPageRoute(builder: (context) => const CreateUserScreen()));
   }
 
   void displaySlots() {
@@ -68,9 +68,9 @@ class _MainScreenState extends State<MainScreen> {
         drawer: AppDrawer(scaffoldKey: _scaffoldKey),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.white,
-          onPressed: reportGenerateRoute,
+          onPressed: _navigateToCreateUser,
           child: const Icon(
-            Icons.file_present_rounded,
+            Icons.person_add_rounded,
             color: Colors.black,
           ),
         ),

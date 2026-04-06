@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:smart_reserve_admin/screens/report_screen.dart';
 import 'package:smart_reserve_admin/screens/staff_access_screen.dart';
 import 'package:smart_reserve_admin/screens/staff_slots_screen.dart';
 
@@ -98,6 +99,20 @@ class AppDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => const StaffAccessScreen()),
+              );
+              scaffoldKey?.currentState?.openDrawer();
+            },
+          ),
+          _DrawerItem(
+            icon: Icons.description_rounded,
+            title: 'Report Generation',
+            iconColor: const Color(0xFFE57373),
+            onTap: () async {
+              Navigator.pop(context);
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ReportScreen()),
               );
               scaffoldKey?.currentState?.openDrawer();
             },
