@@ -1,5 +1,6 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
+import 'package:smart_reserve_admin/services/gcp_logging_service.dart';
 import "forget_password_screen.dart";
 
 import "../widgets/ui/background_shapes.dart";
@@ -30,8 +31,10 @@ class _LoginScreenState extends State<LoginScreen> {
       try {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: userName.text.trim(), password: password.text);
+        GCPLog.info('Admin login successful', userId: userName.text.trim());
         Navigator.pop(context);
       } on FirebaseAuthException catch (e) {
+        GCPLog.warning('Admin login failed: ${e.code}', userId: userName.text.trim());
         print(e.code.toString());
         Navigator.pop(context);
         if (e.code == 'invalid-email') {

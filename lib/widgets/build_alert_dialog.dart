@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 
 import "package:smart_reserve_admin/services/fetch_server.dart";
+import "package:smart_reserve_admin/services/gcp_logging_service.dart";
 
 import "../services/delete_booking.dart";
 import "build_text_filed.dart";
@@ -89,6 +90,7 @@ class BuildDialog {
             ElevatedButton(
               onPressed: () async {
                 if (password.text == currentPassword) {
+                  GCPLog.warning('SENSITIVE OPERATION: All booking data deletion confirmed and initiated');
                   await DeleteBooking.deleteBookingDetails(
                       "bookingDetails", "booking");
                   await DeleteBooking.deleteBookingDetails(
@@ -99,6 +101,7 @@ class BuildDialog {
                     content: Text('All Data Deleted Successfully'),
                   ));
                 } else {
+                  GCPLog.warning('SENSITIVE OPERATION FAILED: Incorrect admin password attempted for booking data deletion');
                   password.clear();
 
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

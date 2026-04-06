@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smart_reserve_admin/services/create_user_service.dart';
+import 'package:smart_reserve_admin/services/gcp_logging_service.dart';
 import 'package:smart_reserve_admin/widgets/ui/background_shapes.dart';
 
 class CreateUserScreen extends StatefulWidget {
@@ -49,6 +50,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
     setState(() => _isLoading = false);
 
     if (error == null) {
+      GCPLog.info('New user account created: ${_nameController.text.trim()} (${_staffIdController.text.trim()})', userId: _emailController.text.trim());
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -60,6 +62,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
       );
       Navigator.pop(context);
     } else {
+      GCPLog.error('User creation failed for ${_emailController.text.trim()}', error: error);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(

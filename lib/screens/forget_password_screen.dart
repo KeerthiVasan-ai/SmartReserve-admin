@@ -1,6 +1,7 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "dart:developer" as dev;
 import "package:flutter/material.dart";
+import 'package:smart_reserve_admin/services/gcp_logging_service.dart';
 import '../widgets/ui/background_shapes.dart';
 import '../widgets/build_app_bar.dart';
 import '../widgets/build_elevated_button.dart';
@@ -29,6 +30,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           });
       try {
         await FirebaseAuth.instance.sendPasswordResetEmail(email: mail.text.trim());
+        GCPLog.info('Password reset email sent', userId: mail.text.trim());
         dev.log("Mail Sent", name: "Success");
         Navigator.pop(context);
         ScaffoldMessenger.of(
@@ -41,6 +43,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         );
       } on FirebaseAuthException catch (e) {
         Navigator.pop(context);
+        GCPLog.warning('Password reset failed: ${e.code}', userId: mail.text.trim());
         if (e.code == 'invalid-email') {
           ScaffoldMessenger.of(
             context,

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smart_reserve_admin/utils/firebase_constants.dart';
+import 'package:smart_reserve_admin/services/gcp_logging_service.dart';
 import 'package:flutter/material.dart';
 
 import 'package:smart_reserve_admin/widgets/ui/background_shapes.dart';
@@ -232,13 +233,14 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
                     name: paramName,
                     isAdmin: isAdmin,
                     isPermanentAdmin: isPermanent,
-                    onChanged: isPermanent
+                          onChanged: isPermanent
                         ? null
                         : (bool value) {
                             FirebaseFirestore.instance
                                 .collection(FirebaseConstants.staffAccess)
                                 .doc(uid)
                                 .update({'isadmin': value});
+                            GCPLog.info('Administrative access changed for $name ($uid) to $value', userId: uid);
                           },
                   );
                 }
@@ -270,6 +272,7 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
                                     .collection(FirebaseConstants.staffAccess)
                                     .doc(uid)
                                     .update({'isadmin': value});
+                                GCPLog.info('Administrative access changed for Unknown User ($uid) to $value', userId: uid);
                               },
                       );
                     }
@@ -282,13 +285,14 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
                       name: paramName,
                       isAdmin: isAdmin,
                       isPermanentAdmin: isPermanent,
-                      onChanged: isPermanent
+                          onChanged: isPermanent
                           ? null
                           : (bool value) {
                               FirebaseFirestore.instance
                                   .collection(FirebaseConstants.staffAccess)
                                   .doc(uid)
                                   .update({'isadmin': value});
+                              GCPLog.info('Administrative access changed for $paramName ($uid) to $value', userId: uid);
                             },
                     );
                   },

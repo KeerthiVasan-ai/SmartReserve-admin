@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
+import 'package:smart_reserve_admin/services/gcp_logging_service.dart';
 import 'package:smart_reserve_admin/services/fetch_report_data.dart';
 import 'package:smart_reserve_admin/widgets/build_alert_dialog.dart';
 import 'package:smart_reserve_admin/widgets/build_app_bar.dart';
@@ -74,6 +75,7 @@ class _ReportScreenState extends State<ReportScreen> {
       DateTime fromDateValue = DateFormat('dd-MM-yyyy').parse(fromDate.text);
       DateTime toDateValue = DateFormat('dd-MM-yyyy').parse(toDate.text);
       if (fromDateValue.isBefore(toDateValue) || fromDateValue == toDateValue) {
+        GCPLog.info('Report generation requested', userId: 'Range: ${fromDate.text} to ${toDate.text}, Format: $_selectedFormat');
         FetchReportData(context)
             .fetchReportData(fromDate.text, toDate.text, _selectedFormat!);
       } else {

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smart_reserve_admin/utils/firebase_constants.dart';
+import 'package:smart_reserve_admin/services/gcp_logging_service.dart';
 import 'package:flutter/material.dart';
 
 import 'package:smart_reserve_admin/widgets/ui/background_shapes.dart';
@@ -85,6 +86,7 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
         );
       }
       await batch.commit();
+      GCPLog.info('Staff slot counts updated successfully (${_editedSlots.length} entries)');
       setState(() {
         _isEditing = false;
         _editedSlots.clear();
@@ -103,6 +105,7 @@ class _StaffSlotsScreenState extends State<StaffSlotsScreen> {
         );
       }
     } catch (e) {
+      GCPLog.error('Failed to update staff slot counts', error: e);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
