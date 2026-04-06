@@ -1,4 +1,4 @@
-package com.keerthi77459.smartreserveadmin
+package com.example.smart_reserve_admin
 
 import android.content.Intent
 import android.os.Bundle
@@ -37,7 +37,7 @@ class MainActivity: FlutterActivity() {
         val appUpdateInfoTask = appUpdateManager.appUpdateInfo
 
         appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-            if (appUpdateInfo.updateAvailability() == UpdateAvailability.updateAvailable
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
                 && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
             ) {
                 // Request the update
@@ -81,7 +81,7 @@ class MainActivity: FlutterActivity() {
         super.onResume()
         // Resume immediate update if one was in progress
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
-            if (appUpdateInfo.updateAvailability() == UpdateAvailability.developerTriggeredUpdateInProgress) {
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
                 appUpdateManager.startUpdateFlowForResult(
                     appUpdateInfo,
                     AppUpdateType.IMMEDIATE,
