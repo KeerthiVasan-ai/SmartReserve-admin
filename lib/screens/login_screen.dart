@@ -1,5 +1,6 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
+import "forget_password_screen.dart";
 
 import "../widgets/ui/background_shapes.dart";
 import "/widgets/build_elevated_button.dart";
@@ -100,6 +101,31 @@ class _LoginScreenState extends State<LoginScreen> {
                       readOnly: false,
                       obscureText: true,
                       isPassword: true,
+                    ),
+                    const SizedBox(height: 10.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ForgetPasswordScreen()));
+                            },
+                            child: const Text(
+                              "Forget Password?",
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Poppins'),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 10.0),
                     BuildElevatedButton(
