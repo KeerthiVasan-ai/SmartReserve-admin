@@ -240,7 +240,7 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
                                 .collection(FirebaseConstants.staffAccess)
                                 .doc(uid)
                                 .update({'isadmin': value});
-                            GCPLog.info('Administrative access changed for $name ($uid) to $value', userId: uid);
+                            GCPLog.info('Administrative access changed for $uid to $value', userId: uid);
                           },
                   );
                 }
