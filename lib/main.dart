@@ -7,6 +7,7 @@ import 'package:smart_reserve_admin/firebase_options.dart';
 import 'package:smart_reserve_admin/screens/splash_screen.dart';
 import 'package:smart_reserve_admin/services/gcp_credentials.dart';
 import 'package:smart_reserve_admin/services/gcp_logging_service.dart';
+import 'package:smart_reserve_admin/services/native_update_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +29,11 @@ Future<void> main() async {
 
   await GCPCredentials.instance.load();
   await GCPLog.instance.setupLoggingApi();
+  GCPLog.info('Admin Application started and logging initialized');
+
+  if (Platform.isAndroid) {
+    NativeUpdateService.checkForUpdate();
+  }
 
   runApp(const MyApp());
 }
