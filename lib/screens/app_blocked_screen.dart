@@ -75,7 +75,7 @@ class _AppBlockedScreenState extends State<AppBlockedScreen> {
                     ElevatedButton.icon(
                       onPressed: () async {
                         final rawUrl =
-                            Constants.APP_URL + (widget.version ?? '');
+                            Constants.APP_URL;
                         final uri = Uri.parse(rawUrl);
 
                         try {

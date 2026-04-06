@@ -21,5 +21,5 @@ class Constants {
       "The App is Currently Under Maintenance. \n Sorry for the Inconvenience";
   static const NEW_VERSION_AVAILABLE = "Update Available";
   static const APP_URL =
-      "https://github.com/KeerthiVasan-ai/SmartReserve-admin/releases/tag/v";
+      "https://play.google.com/store/apps/details?id=com.keerthi77459.smartreserveadmin";
 }
