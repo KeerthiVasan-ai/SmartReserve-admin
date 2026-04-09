@@ -10,6 +10,8 @@ class FirebaseConstants {
   static const String constants = 'constants';
   static const String allottedSlots = 'allottedSlots';
   static const String userName = 'userName';
+
+  static const String staffId = 'tokenNumber';
   static const String staffAccess = 'staffaccess';
 
   // Document names

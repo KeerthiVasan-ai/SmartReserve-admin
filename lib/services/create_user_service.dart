@@ -40,7 +40,10 @@ class CreateUserService {
         // userName collection: name + staffId
         firestore.collection(FirebaseConstants.userName).doc(uid).set({
           'name': name,
-          'staffId': staffId,
+        }),
+
+        firestore.collection(FirebaseConstants.staffId).doc(uid).set({
+          'token': staffId,
         }),
 
         // allottedSlots collection: weekly slot count
