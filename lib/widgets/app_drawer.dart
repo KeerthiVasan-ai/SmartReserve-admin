@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_reserve_admin/screens/report_screen.dart';
 import 'package:smart_reserve_admin/screens/staff_access_screen.dart';
 import 'package:smart_reserve_admin/screens/staff_slots_screen.dart';
+import 'package:smart_reserve_admin/screens/slot_configuration_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   final GlobalKey<ScaffoldState>? scaffoldKey;
@@ -75,6 +76,20 @@ class AppDrawer extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
+          _DrawerItem(
+            icon: Icons.schedule_rounded,
+            title: 'Global Slot Config',
+            iconColor: const Color(0xFF4CAF50),
+            onTap: () async {
+              Navigator.pop(context);
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SlotConfigurationScreen()),
+              );
+              scaffoldKey?.currentState?.openDrawer();
+            },
+          ),
           _DrawerItem(
             icon: Icons.list_alt_rounded,
             title: 'Staff Slot Counts',

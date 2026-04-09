@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:smart_reserve_admin/services/delete_user_service.dart';
 import 'package:smart_reserve_admin/utils/firebase_constants.dart';
 import 'package:smart_reserve_admin/services/gcp_logging_service.dart';
 import 'package:flutter/material.dart';
@@ -233,7 +234,8 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
                     name: paramName,
                     isAdmin: isAdmin,
                     isPermanentAdmin: isPermanent,
-                          onChanged: isPermanent
+                    onDelete: () => _showDeleteDialog(context, uid, paramName),
+                    onChanged: isPermanent
                         ? null
                         : (bool value) {
                             FirebaseFirestore.instance
@@ -255,6 +257,7 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
                         name: "Loading name...",
                         isAdmin: isAdmin,
                         onChanged: null,
+                        onDelete: null,
                       );
                     }
 
@@ -265,6 +268,7 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
                         name: "Unknown User",
                         isAdmin: isAdmin,
                         isPermanentAdmin: isPermanent,
+                        onDelete: () => _showDeleteDialog(context, uid, "Unknown User"),
                         onChanged: isPermanent
                             ? null
                             : (bool value) {
@@ -285,7 +289,8 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
                       name: paramName,
                       isAdmin: isAdmin,
                       isPermanentAdmin: isPermanent,
-                          onChanged: isPermanent
+                      onDelete: () => _showDeleteDialog(context, uid, paramName),
+                      onChanged: isPermanent
                           ? null
                           : (bool value) {
                               FirebaseFirestore.instance
@@ -309,6 +314,7 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
     required String name,
     required bool isAdmin,
     required ValueChanged<bool>? onChanged,
+    VoidCallback? onDelete,
     bool isPermanentAdmin = false,
   }) {
     final statusColor = isAdmin
@@ -349,13 +355,92 @@ class _StaffAccessScreenState extends State<StaffAccessScreen> {
             fontWeight: FontWeight.w500,
           ),
         ),
-        trailing: Switch(
-          value: isAdmin,
-          onChanged: onChanged,
-          activeThumbColor: const Color(0xFF2D9596),
-          activeTrackColor: const Color(0xFF2D9596).withValues(alpha:0.40),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (!isPermanentAdmin && onDelete != null)
+              IconButton(
+                icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+                onPressed: onDelete,
+                tooltip: 'Delete User',
+              ),
+            Switch(
+              value: isAdmin,
+              onChanged: onChanged,
+              activeThumbColor: const Color(0xFF2D9596),
+              activeTrackColor: const Color(0xFF2D9596).withValues(alpha:0.40),
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  void _showDeleteDialog(BuildContext context, String uid, String name) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        bool isDeleting = false;
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text(
+                'Delete $name?',
+                style: const TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold),
+              ),
+              content: const Text(
+                'Are you sure you want to delete this user? All their future bookings and account data will be permanently removed. Past bookings will be retained for historical records.',
+                style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: isDeleting ? null : () => Navigator.pop(context),
+                  child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
+                ),
+                TextButton(
+                  onPressed: isDeleting
+                      ? null
+                      : () async {
+                          setState(() => isDeleting = true);
+                          final error = await DeleteUserService.deleteUserCompletely(uid);
+                          setState(() => isDeleting = false);
+                          
+                          if (!context.mounted) return;
+                          
+                          Navigator.pop(context);
+                          
+                          if (error == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('$name deleted successfully!'),
+                                backgroundColor: const Color(0xFF2D9596),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Error: $error'),
+                                backgroundColor: Colors.redAccent,
+                              ),
+                            );
+                          }
+                        },
+                  child: isDeleting
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Text(
+                          'Delete',
+                          style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold),
+                        ),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }
