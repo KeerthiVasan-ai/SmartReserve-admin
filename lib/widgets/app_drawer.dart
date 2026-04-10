@@ -4,6 +4,8 @@ import 'package:smart_reserve_admin/screens/report_screen.dart';
 import 'package:smart_reserve_admin/screens/staff_access_screen.dart';
 import 'package:smart_reserve_admin/screens/staff_slots_screen.dart';
 import 'package:smart_reserve_admin/screens/slot_configuration_screen.dart';
+import 'package:smart_reserve_admin/screens/settings_screen.dart';
+import 'package:smart_reserve_admin/screens/admin_notification_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   final GlobalKey<ScaffoldState>? scaffoldKey;
@@ -128,6 +130,34 @@ class AppDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => const ReportScreen()),
+              );
+              scaffoldKey?.currentState?.openDrawer();
+            },
+          ),
+          _DrawerItem(
+            icon: Icons.notifications_active_rounded,
+            title: 'Admin Alerts',
+            iconColor: const Color(0xFFFBC02D), // Amber/Yellow
+            onTap: () async {
+              Navigator.pop(context);
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AdminNotificationScreen()),
+              );
+              scaffoldKey?.currentState?.openDrawer();
+            },
+          ),
+          _DrawerItem(
+            icon: Icons.settings_rounded,
+            title: 'Settings',
+            iconColor: Colors.blueGrey,
+            onTap: () async {
+              Navigator.pop(context);
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SettingsScreen()),
               );
               scaffoldKey?.currentState?.openDrawer();
             },

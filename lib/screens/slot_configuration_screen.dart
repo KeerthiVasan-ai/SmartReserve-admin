@@ -11,13 +11,32 @@ class SlotConfigurationScreen extends StatefulWidget {
       _SlotConfigurationScreenState();
 }
 
-class _SlotConfigurationScreenState extends State<SlotConfigurationScreen> {
+class _SlotConfigurationScreenState extends State<SlotConfigurationScreen> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
   final DocumentReference _configRef = FirebaseFirestore.instance
       .collection('slotConfigurations')
       .doc('globalSlots');
 
+  @override
+  void initState() {
+    super.initState();
+    // Default to the "next day" tab
+    int nextDay = DateTime.now().weekday == 7 ? 1 : DateTime.now().weekday + 1;
+    _tabController = TabController(length: 7, vsync: this, initialIndex: nextDay - 1);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  final List<String> _weekdays = [
+    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+  ];
+
   Future<void> _toggleSlotDialog(
-      String slotName, bool currentStatus, String currentReason) async {
+      String weekdayKey, String slotName, bool currentStatus, String currentReason) async {
     // If we're enabling it, we don't strictly need a reason, but if we're disabling, we do.
     bool newStatus = !currentStatus;
     TextEditingController reasonController =
@@ -77,10 +96,12 @@ class _SlotConfigurationScreenState extends State<SlotConfigurationScreen> {
       String updatedReason = newStatus ? '' : reasonController.text.trim();
       try {
         await _configRef.set({
-          slotName: {'enabled': newStatus, 'reason': updatedReason}
+          weekdayKey: {
+            slotName: {'enabled': newStatus, 'reason': updatedReason}
+          }
         }, SetOptions(merge: true));
 
-        GCPLog.info('Slot $slotName updated. Enabled: $newStatus, Reason: $updatedReason');
+        GCPLog.info('Slot $slotName updated on day $weekdayKey. Enabled: $newStatus');
       } catch (e) {
         GCPLog.error('Failed to update slot $slotName', error: e);
         if (mounted) {
@@ -107,11 +128,32 @@ class _SlotConfigurationScreenState extends State<SlotConfigurationScreen> {
               fontFamily: 'Poppins',
               fontWeight: FontWeight.bold,
               fontSize: 18,
+              color: Colors.black,
             ),
           ),
           backgroundColor: Colors.transparent,
           centerTitle: true,
           elevation: 0,
+          leading: const BackButton(color: Colors.black),
+          bottom: TabBar(
+            controller: _tabController,
+            isScrollable: true,
+            indicatorColor: Colors.black,
+            indicatorWeight: 3,
+            labelColor: Colors.black,
+            unselectedLabelColor: Colors.black.withValues(alpha: 0.6),
+            labelStyle: const TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+            unselectedLabelStyle: const TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+            ),
+            tabs: _weekdays.map((day) => Tab(text: day)).toList(),
+          ),
         ),
         body: StreamBuilder<DocumentSnapshot>(
           stream: _configRef.snapshots(),
@@ -134,106 +176,150 @@ class _SlotConfigurationScreenState extends State<SlotConfigurationScreen> {
               dbData = snapshot.data!.data() as Map<String, dynamic>;
             }
 
-            final List<String> dynamicSlotNames = dbData.keys.toList();
+            int currentWeekday = DateTime.now().weekday;
+            int editableWeekday = currentWeekday == 7 ? 1 : currentWeekday + 1;
 
-            dynamicSlotNames.sort((a, b) {
-              final aOrder = (dbData[a] as Map?)?['order'] ?? 99;
-              final bOrder = (dbData[b] as Map?)?['order'] ?? 99;
-              return (aOrder as num).compareTo(bOrder as num);
-            });
+            return TabBarView(
+              controller: _tabController,
+              children: List.generate(7, (index) {
+                final String weekdayKey = (index + 1).toString();
+                final bool isEditable = (index + 1) == editableWeekday;
+                
+                final Map<String, dynamic> dayData = 
+                    (dbData[weekdayKey] as Map<String, dynamic>?) ?? {};
 
-            if (dynamicSlotNames.isEmpty) {
-              return Center(
-                child: Text(
-                  'No slots configured in Firebase.',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 16,
-                    color: Colors.grey.shade700,
-                  ),
-                ),
-              );
-            }
+                final List<String> dynamicSlotNames = dayData.keys.toList();
 
-            return ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              itemCount: dynamicSlotNames.length,
-              itemBuilder: (context, index) {
-                final slotName = dynamicSlotNames[index];
-                final slotConfig = dbData[slotName] as Map<String, dynamic>? ??
-                    {'enabled': true, 'reason': ''};
+                dynamicSlotNames.sort((a, b) {
+                  final aOrder = (dayData[a] as Map?)?['order'] ?? 99;
+                  final bOrder = (dayData[b] as Map?)?['order'] ?? 99;
+                  return (aOrder as num).compareTo(bOrder as num);
+                });
 
-                final bool isEnabled = slotConfig['enabled'] ?? true;
-                final String reason = slotConfig['reason'] ?? '';
-
-                final statusColor =
-                    isEnabled ? const Color(0xFF2D9596) : const Color(0xFFE57373);
-
-                return Container(
-                  margin: const EdgeInsets.symmetric(vertical: 6),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.25),
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: Colors.white.withValues(alpha: 0.60)),
-                  ),
-                  child: ListTile(
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    title: Text(
-                      slotName,
-                      style: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
+                if (dynamicSlotNames.isEmpty) {
+                  return Center(
+                    child: Text(
+                      'No slots configured for ${_weekdays[index]}.',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 16,
+                        color: Colors.grey.shade700,
+                      ),
                     ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 4),
-                        Text(
-                          isEnabled ? 'Configured: Enabled' : 'Configured: Disabled',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 13,
-                            color: statusColor,
-                            fontWeight: FontWeight.w600,
-                          ),
+                  );
+                }
+
+                return ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  itemCount: dynamicSlotNames.length,
+                  itemBuilder: (context, slotIndex) {
+                    final slotName = dynamicSlotNames[slotIndex];
+                    final slotConfig = dayData[slotName] as Map<String, dynamic>? ??
+                        {'enabled': true, 'reason': ''};
+
+                    final bool isEnabled = slotConfig['enabled'] ?? true;
+                    final String reason = slotConfig['reason'] ?? '';
+
+                    final statusColor =
+                        isEnabled ? const Color(0xFF2D9596) : const Color(0xFFE57373);
+
+                    return Container(
+                      margin: const EdgeInsets.symmetric(vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.4),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: Colors.black.withValues(alpha: 0.1),
                         ),
-                        if (!isEnabled && reason.isNotEmpty) ...[
-                          const SizedBox(height: 4),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: Colors.redAccent.withValues(alpha: 0.1),
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            child: Text(
-                              'Reason: $reason',
-                              style: const TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 12,
-                                color: Colors.redAccent,
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.05),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
                           ),
                         ],
-                      ],
-                    ),
-                    trailing: Switch(
-                      value: isEnabled,
-                      onChanged: (bool val) =>
-                          _toggleSlotDialog(slotName, isEnabled, reason),
-                      activeThumbColor: const Color(0xFF2D9596),
-                      activeTrackColor:
-                          const Color(0xFF2D9596).withValues(alpha: 0.40),
-                      inactiveThumbColor: Colors.redAccent,
-                      inactiveTrackColor: Colors.redAccent.withValues(alpha: 0.3),
-                    ),
-                  ),
+                      ),
+                      child: ListTile(
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        title: Text(
+                          slotName,
+                          style: const TextStyle(
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 17),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 4),
+                            Text(
+                              isEnabled ? 'Configured: Enabled' : 'Configured: Disabled',
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 13,
+                                color: statusColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            if (!isEnabled && reason.isNotEmpty) ...[
+                              const SizedBox(height: 4),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: Colors.redAccent.withValues(alpha: 0.1),
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Text(
+                                  'Reason: $reason',
+                                  style: const TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: 12,
+                                    color: Colors.redAccent,
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                              ),
+                            ],
+                            if (!isEditable) ...[
+                              const SizedBox(height: 4),
+                              Text(
+                                "Read-only (only tomorrow's slots are editable)",
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 11,
+                                  color: Colors.black.withValues(alpha: 0.5),
+                                ),
+                              ),
+                            ]
+                          ],
+                        ),
+                        trailing: IgnorePointer(
+                          ignoring: !isEditable,
+                          child: Opacity(
+                            opacity: isEditable ? 1.0 : 0.5,
+                            child: Switch(
+                              value: isEnabled,
+                              onChanged: (bool val) {
+                                if (isEditable) {
+                                  _toggleSlotDialog(weekdayKey, slotName, isEnabled, reason);
+                                }
+                              },
+                              activeThumbColor: const Color(0xFF2D9596),
+                              activeTrackColor:
+                                  const Color(0xFF2D9596).withValues(alpha: 0.40),
+                              inactiveThumbColor: Colors.redAccent,
+                              inactiveTrackColor: Colors.redAccent.withValues(alpha: 0.3),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 );
-              },
+              }),
             );
           },
         ),

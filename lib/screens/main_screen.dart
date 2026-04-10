@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer' as dev;
 
 import 'package:intl/intl.dart';
 import 'package:smart_reserve_admin/screens/create_user_screen.dart';
@@ -25,6 +27,16 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     myDate = TextEditingController();
+    _subscribeToAdminNotifications();
+  }
+
+  void _subscribeToAdminNotifications() async {
+    try {
+      await FirebaseMessaging.instance.subscribeToTopic('admin_notifications');
+      dev.log('Subscribed to admin_notifications topic', name: 'MainScreen');
+    } catch (e) {
+      dev.log('FCM subscription failed: $e', name: 'MainScreen');
+    }
   }
 
   void _signOut() {
