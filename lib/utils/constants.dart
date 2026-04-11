@@ -16,7 +16,7 @@ class Constants {
   static List<String> reportFormat = ["PDF", "XLSX"];
 
   // App version & maintenance
-  static const APP_VERSION = '1.3.0';
+  static const APP_VERSION = '2.0.0';
   static const UNDER_MAINTENANCE =
       "The App is Currently Under Maintenance. \n Sorry for the Inconvenience";
   static const NEW_VERSION_AVAILABLE = "Update Available";
