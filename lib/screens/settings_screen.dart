@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:smart_reserve_admin/services/local_notification_service.dart';
 import 'package:smart_reserve_admin/widgets/ui/background_shapes.dart';
 
@@ -35,6 +36,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<void> _saveSettings() async {
+    if (_enableNotifications) {
+      final status = await Permission.notification.status;
+      if (!status.isGranted) {
+        final result = await Permission.notification.request();
+        if (!result.isGranted) {
+          setState(() {
+            _enableNotifications = false;
+          });
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Notification permission is required for reminders"),
+              ),
+            );
+          }
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setBool('enableNotifications', false);
+          return;
+        }
+      }
+    }
+
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('enableNotifications', _enableNotifications);
     await prefs.setStringList(

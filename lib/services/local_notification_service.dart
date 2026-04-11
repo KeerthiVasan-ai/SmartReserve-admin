@@ -9,6 +9,8 @@ class LocalNotificationService {
 
   static Future<void> init() async {
     tz.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
+    dev.log("Timezone initialized to Asia/Kolkata");
     
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -70,6 +72,7 @@ class LocalNotificationService {
           channelDescription: 'Channel for daily slot configuration reminders',
           importance: Importance.max,
           priority: Priority.high,
+          showWhen: false
         ),
       ),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
