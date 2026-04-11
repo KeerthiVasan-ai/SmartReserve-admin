@@ -29,6 +29,8 @@ class _SplashScreenState extends State<SplashScreen> {
     final bool isUnderMaintenance =
         serverDetails['isAppUnderMaintenance'] as bool;
     final String version = serverDetails['version'] as String;
+    final List allowedAdminVersions =
+        serverDetails['allowedAdminVersions'] as List;
 
     if (isUnderMaintenance) {
       Timer(
@@ -41,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ),
       );
-    } else if (version != Constants.APP_VERSION) {
+    } else if (!allowedAdminVersions.contains(Constants.APP_VERSION)) {
       Timer(
         const Duration(seconds: 3),
         () => Navigator.pushReplacement(

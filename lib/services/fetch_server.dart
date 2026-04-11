@@ -37,6 +37,7 @@ class FetchServerDetails {
       return {
         'isAppUnderMaintenance': data['isAdminAppUnderMaintenance'] ?? false,
         'version': data['adminVersion'] ?? 'unknown',
+        'allowedAdminVersions': data['allowed_admin_version'] ?? [],
       };
     } catch (error) {
       dev.log(
@@ -46,6 +47,7 @@ class FetchServerDetails {
       return {
         'isAppUnderMaintenance': false,
         'version': 'unknown',
+        'allowedAdminVersions': [],
       };
     }
   }
