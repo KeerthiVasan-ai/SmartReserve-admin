@@ -1,6 +1,7 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
-import "package:google_fonts/google_fonts.dart";
+import 'package:smart_reserve_admin/services/gcp_logging_service.dart';
+import "forget_password_screen.dart";
 
 import "../widgets/ui/background_shapes.dart";
 import "/widgets/build_elevated_button.dart";
@@ -30,16 +31,18 @@ class _LoginScreenState extends State<LoginScreen> {
       try {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: userName.text.trim(), password: password.text);
+        GCPLog.info('Admin login successful', userId: userName.text.trim());
         Navigator.pop(context);
       } on FirebaseAuthException catch (e) {
+        GCPLog.warning('Admin login failed: ${e.code}', userId: userName.text.trim());
         print(e.code.toString());
         Navigator.pop(context);
         if (e.code == 'invalid-email') {
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text("Invalid Email")));
         } else if (e.code == 'invalid-credential') {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text("Check your Credentials")));
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Check your Credentials")));
         }
       } catch (e) {
         print(e.toString());
@@ -69,14 +72,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Text(
                             "Hello,",
-                            style: GoogleFonts.poppins(
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.bold,
                               fontSize: 40,
                             ),
                           ),
                           Text(
                             "Welcome Back!",
-                            style: GoogleFonts.poppins(
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.bold,
                               fontSize: 24,
                             ),
@@ -99,6 +104,31 @@ class _LoginScreenState extends State<LoginScreen> {
                       readOnly: false,
                       obscureText: true,
                       isPassword: true,
+                    ),
+                    const SizedBox(height: 10.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ForgetPasswordScreen()));
+                            },
+                            child: const Text(
+                              "Forget Password?",
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Poppins'),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 10.0),
                     BuildElevatedButton(

@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
-import "package:google_fonts/google_fonts.dart";
+
 import "package:smart_reserve_admin/services/fetch_server.dart";
+import "package:smart_reserve_admin/services/gcp_logging_service.dart";
 
 import "../services/delete_booking.dart";
 import "build_text_filed.dart";
@@ -20,7 +21,8 @@ class BuildDialog {
         return AlertDialog(
           title: Text(
             'Alert !!',
-            style: GoogleFonts.poppins(
+            style: TextStyle(
+              fontFamily: 'Poppins',
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
@@ -35,7 +37,8 @@ class BuildDialog {
               children: [
                 Text(
                   "Sensitive Operation ! Are you sure want to delete all the booking details ?",
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
@@ -45,7 +48,8 @@ class BuildDialog {
                 ),
                 Text(
                   "Enter the Admin Password",
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,
                     fontSize: 12,
                   ),
@@ -61,10 +65,13 @@ class BuildDialog {
                   horizontalPadding: 0.0,
                   verticalPadding: 0.0,
                 ),
-                const SizedBox(height: 10.0,),
+                const SizedBox(
+                  height: 10.0,
+                ),
                 Text(
                   "Hint : Take a Report Before Deleting",
-                  style: GoogleFonts.poppins(
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,
                     fontSize: 8,
                   ),
@@ -83,6 +90,7 @@ class BuildDialog {
             ElevatedButton(
               onPressed: () async {
                 if (password.text == currentPassword) {
+                  GCPLog.warning('SENSITIVE OPERATION: All booking data deletion confirmed and initiated');
                   await DeleteBooking.deleteBookingDetails(
                       "bookingDetails", "booking");
                   await DeleteBooking.deleteBookingDetails(
@@ -93,6 +101,7 @@ class BuildDialog {
                     content: Text('All Data Deleted Successfully'),
                   ));
                 } else {
+                  GCPLog.warning('SENSITIVE OPERATION FAILED: Incorrect admin password attempted for booking data deletion');
                   password.clear();
 
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

@@ -8,9 +8,9 @@ class FrostedGlassUI extends StatelessWidget {
 
   const FrostedGlassUI(
       {required this.theWidth,
-        required this.theHeight,
-        required this.theChild,
-        super.key});
+      required this.theHeight,
+      required this.theChild,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +31,13 @@ class FrostedGlassUI extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.white.withOpacity(0.70)),
+                  border: Border.all(color: Colors.white.withValues(alpha:0.70)),
                   gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Colors.white.withOpacity(0.30),
-                        Colors.white.withOpacity(0.10)
+                        Colors.white.withValues(alpha:0.30),
+                        Colors.white.withValues(alpha:0.10)
                       ]),
                 ),
               ),

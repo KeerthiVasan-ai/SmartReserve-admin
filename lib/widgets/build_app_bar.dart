@@ -1,17 +1,27 @@
 import "package:flutter/material.dart";
-import "package:google_fonts/google_fonts.dart";
 
-AppBar buildAppBar(String title) {
-  return AppBar(
-    title: Text(
-      title,
-      style: GoogleFonts.poppins(
-        fontWeight: FontWeight.bold,
-        fontSize: 18,
+class BuildAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+
+  const BuildAppBar({super.key, required this.title});
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(
+        title,
+        style: TextStyle(
+          fontFamily: 'Poppins',
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
       ),
-    ),
-    backgroundColor: Colors.transparent,
-    centerTitle: true,
-    elevation: 0,
-  );
+      backgroundColor: Colors.transparent,
+      centerTitle: true,
+      elevation: 0,
+    );
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:intl/intl.dart';
+import 'package:smart_reserve_admin/services/gcp_logging_service.dart';
 import 'package:smart_reserve_admin/services/fetch_report_data.dart';
 import 'package:smart_reserve_admin/widgets/build_alert_dialog.dart';
 import 'package:smart_reserve_admin/widgets/build_app_bar.dart';
@@ -41,8 +42,8 @@ class _ReportScreenState extends State<ReportScreen> {
     DateTime? picker = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(2024),
-        lastDate: DateTime.now());
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2100));
 
     if (picker != null) {
       setState(() {
@@ -55,8 +56,8 @@ class _ReportScreenState extends State<ReportScreen> {
     DateTime? picker = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(2024),
-        lastDate: DateTime.now());
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2100));
 
     if (picker != null) {
       setState(() {
@@ -74,6 +75,7 @@ class _ReportScreenState extends State<ReportScreen> {
       DateTime fromDateValue = DateFormat('dd-MM-yyyy').parse(fromDate.text);
       DateTime toDateValue = DateFormat('dd-MM-yyyy').parse(toDate.text);
       if (fromDateValue.isBefore(toDateValue) || fromDateValue == toDateValue) {
+        GCPLog.info('Report generation requested', userId: 'Range: ${fromDate.text} to ${toDate.text}, Format: $_selectedFormat');
         FetchReportData(context)
             .fetchReportData(fromDate.text, toDate.text, _selectedFormat!);
       } else {
@@ -88,7 +90,7 @@ class _ReportScreenState extends State<ReportScreen> {
     return BackgroundShapes(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: buildAppBar("Report Generation"),
+        appBar: BuildAppBar(title: "Report Generation"),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.white,
           onPressed: () {
@@ -118,7 +120,8 @@ class _ReportScreenState extends State<ReportScreen> {
                       children: [
                         Text(
                           "Generate Report",
-                          style: GoogleFonts.poppins(
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),

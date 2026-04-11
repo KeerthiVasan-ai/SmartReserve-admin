@@ -30,11 +30,11 @@ class BackgroundPainter extends CustomPainter {
   }
 
   void drawShape1(
-      Canvas canvas,
-      Size size,
-      Paint paint,
-      Color color,
-      ) {
+    Canvas canvas,
+    Size size,
+    Paint paint,
+    Color color,
+  ) {
     paint.color = color;
     Path path = Path();
 
@@ -51,11 +51,11 @@ class BackgroundPainter extends CustomPainter {
   }
 
   void drawShape2(
-      Canvas canvas,
-      Size size,
-      Paint paint,
-      Color color,
-      ) {
+    Canvas canvas,
+    Size size,
+    Paint paint,
+    Color color,
+  ) {
     paint.color = color;
     Path path = Path();
 
@@ -72,11 +72,11 @@ class BackgroundPainter extends CustomPainter {
   }
 
   void drawShape3(
-      Canvas canvas,
-      Size size,
-      Paint paint,
-      Color color,
-      ) {
+    Canvas canvas,
+    Size size,
+    Paint paint,
+    Color color,
+  ) {
     paint.color = color;
     Path path = Path();
 
